@@ -12,27 +12,11 @@ License: BSD-3-Clause
     %define with_lang_bind 1
 %endif
 
-%if 0%{?rhel} && 0%{?rhel} < 7
-    # CentOS/RedHat before 7.0 contains old pcre without pcre_free_study().
-    # With cache disabled, this isn't needed
-    %define with_enable_cache 0
-    # CentOS/RedHat before 7.0 contains old valgrind which can't run
-    # valgrind tests. Disable them
-    %define with_valgrind 0
-%else
-    %define with_enable_cache 1
-    %define with_valgrind 1
-%endif
-
 Requires:  pcre
 BuildRequires:  cmake
 BuildRequires:  doxygen
 BuildRequires:  pcre-devel
 BuildRequires:  gcc
-
-%if %{with_valgrind}
-BuildRequires:  valgrind
-%endif
 
 %if %{with_lang_bind}
 BuildRequires:  gcc-c++
@@ -95,22 +79,13 @@ cd build
 %else
     %define cmake_lang_bind "-DGEN_LANGUAGE_BINDINGS=OFF"
 %endif
-%if %{with_enable_cache}
-    %define cmake_enable_cache ""
-%else
-    %define cmake_enable_cache "-DENABLE_CACHE=OFF"
-%endif
-%if %{with_valgrind}
-    %define cmake_valgrind ""
-%else
-    %define cmake_valgrind "-DENABLE_VALGRIND_TESTS=OFF"
-%endif
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr \
    -DCMAKE_BUILD_TYPE:String="Package" \
    -DENABLE_LYD_PRIV=ON \
    -DGEN_JAVA_BINDINGS=OFF \
    -DGEN_JAVASCRIPT_BINDINGS=OFF \
-   %{cmake_valgrind} %{cmake_lang_bind} %{cmake_enable_cache} ..
+   -DENABLE_VALGRIND_TESTS=OFF \
+   %{cmake_lang_bind} ..
 make
 
 %check
