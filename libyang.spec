@@ -13,6 +13,7 @@ License: BSD
 %endif
 
 BuildRequires:  cmake
+BuildRequires:  libcmocka-devel
 BuildRequires:  doxygen
 BuildRequires:  pcre-devel
 BuildRequires:  gcc
@@ -20,7 +21,6 @@ BuildRequires:  gcc
 %if %{with_lang_bind}
 BuildRequires:  gcc-c++
 BuildRequires:  swig >= 3.0.12
-BuildRequires:  libcmocka-devel
 
 %if 0%{?suse_version} + 0%{?fedora} > 0
 BuildRequires:  python3-devel
