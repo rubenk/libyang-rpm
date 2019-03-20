@@ -5,7 +5,6 @@ Summary: Libyang library
 Url: https://github.com/CESNET/libyang
 Source: %{url}/archive/master.tar.gz
 License: BSD-3-Clause
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 
 %if (0%{?rhel} && 0%{?rhel} < 8) || (0%{?fedora} && 0%{?fedora} < 27)
     %define with_lang_bind 0
@@ -86,7 +85,7 @@ Headers of libyang library.
 Libyang is YANG data modelling language parser and toolkit written (and providing API) in C.
 
 %prep
-%setup -n libyang-master
+%setup -q -n libyang-master
 mkdir build
 
 %build
@@ -125,15 +124,14 @@ make DESTDIR=%{buildroot} install
 %post -p /sbin/ldconfig
 %if %{with_lang_bind}
     %post -n libyang-cpp -p /sbin/ldconfig
-%endif 
+%endif
 
 %postun -p /sbin/ldconfig
 %if %{with_lang_bind}
     %postun -n libyang-cpp -p /sbin/ldconfig
-%endif 
+%endif
 
 %files
-%defattr(-,root,root)
 %{_bindir}/yanglint
 %{_bindir}/yangre
 %{_datadir}/man/man1/yanglint.1.gz
@@ -143,7 +141,6 @@ make DESTDIR=%{buildroot} install
 %dir %{_libdir}/libyang/
 
 %files devel
-%defattr(-,root,root)
 %{_libdir}/libyang.so
 %{_libdir}/pkgconfig/libyang.pc
 %{_includedir}/libyang/*.h
@@ -151,18 +148,15 @@ make DESTDIR=%{buildroot} install
 
 %if %{with_lang_bind}
 %files -n libyang-cpp
-%defattr(-,root,root)
 %{_libdir}/libyang-cpp.so.*
 
 %files -n libyang-cpp-devel
-%defattr(-,root,root)
 %{_libdir}/libyang-cpp.so
 %{_includedir}/libyang/*.hpp
 %{_libdir}/pkgconfig/libyang-cpp.pc
 %dir %{_includedir}/libyang/
 
 %files -n python3-yang
-%defattr(-,root,root)
 %{_libdir}/python*
 %endif
 
