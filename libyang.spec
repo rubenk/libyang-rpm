@@ -86,7 +86,7 @@ cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr \
    -DGEN_JAVASCRIPT_BINDINGS=OFF \
    -DENABLE_VALGRIND_TESTS=OFF \
    %{cmake_lang_bind} ..
-make
+make %{?_smp_mflags}
 
 %check
 cd build
