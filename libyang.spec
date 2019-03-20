@@ -12,7 +12,6 @@ License: BSD-3-Clause
     %define with_lang_bind 1
 %endif
 
-Requires:  pcre
 BuildRequires:  cmake
 BuildRequires:  doxygen
 BuildRequires:  pcre-devel
