@@ -4,7 +4,7 @@ Release: 0
 Summary: Libyang library
 Url: https://github.com/CESNET/libyang
 Source: %{url}/archive/master.tar.gz
-License: BSD-3-Clause
+License: BSD
 
 %if (0%{?rhel} && 0%{?rhel} < 8) || (0%{?fedora} && 0%{?fedora} < 27)
     %define with_lang_bind 0
